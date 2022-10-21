@@ -1,0 +1,44 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-3">
+        <h3 class="text-secondary">بحث متقدم</h3>
+    </div>
+
+    <form class="col-md" action="{%  url 'search' %} ">
+        <div class="input-group">
+            <div class="form-outline">
+                <input type="search" id="form1" name="q" class="form-control" placeholder="ادخل عنوان المدونة" />
+            </div>
+            <button type="submit" class="btn btn-primary">
+                ابحث
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </form>
+</div>
+
+<div class="row mt-5">
+    {% if posts %}
+    {% for post in posts %}
+    <div class="border p-3 mb-3">
+        <img class="img-fluid rounded-circle border m-2" style="width: 70px; height:70px;"
+            src="{{post.author.profiles.image.url}}" alt="صورة الناشر">
+        <span class="text-secondary">نشر في {{post.post_date|date:'d-m-Y'}}</span>
+        <h3><a class="text-dark text-decoration-none" href="{% url 'detail' post.id  %}">{{post.title}}</a></h3>
+        <p>{{post.content}}</p>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="border p-3 mb-3">
+        <h3 class="text-center">لا يوجد نتائج </h3>
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock content %}
